@@ -209,3 +209,436 @@ Create a new User.
       "error": "Invalid data. Please provide valid information."
     }
     ```
+
+### `PUT /api/users/profile/update/`
+
+**Description:**
+
+Update user profile.
+
+**Request:**
+- **Method:** `PUT`
+- **Endpoint:** `/api/users/profile/update/`
+- **Header:** `Authorization: Bearer <access_token>`
+- **Body:**
+  - `bio` (string, optional): User's about.
+  - `date_of_birth` (date, optional): User's date_of_birth.
+  - `location` (string, optional): User's location.
+  - `social_media_link` (string, optional): User's social media link.
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 200 OK
+  - **Body:**
+    ```json
+    {
+      "id": 1,
+      "bio": "Updated bio content.",
+      "date_of_birth": "1990-01-01",
+      "location": "Updated location",
+      "social_media_link": "https://example.com/user123"
+    }
+    ```
+
+- **Error Response:**
+  - **Status Code:** 400 Bad Request
+  - **Body:**
+    ```json
+    {
+      "error": "Invalid data. Please provide valid information."
+    }
+    ```
+
+
+### `POST /api/books/create/`
+
+**Description:**
+
+Create a new book.
+
+**Request:**
+- **Method:** `POST`
+- **Endpoint:** `/api/books/create/`
+- **Header:** `Authorization: Bearer <access_token>`
+- **Body:**
+  - `title` (string, required): Title of the book.
+  - `authors` (string, required): Authors of the book.
+  - `genre` (string, required): Genre of the book.
+  - `publication_date` (date, required): Publication date of the book.
+  - `description` (string, optional): Description of the book.
+  - `document` (file, optional): Document file of the book.
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 201 Created
+  - **Body:**
+    ```json
+    {
+      "id": 1,
+      "title": "Sample Book",
+      "authors": "Author Name",
+      "genre": "Fiction",
+      "publication_date": "2024-05-05",
+      "description": "Sample description",
+      "document": "http://example.com/books/documents/sample_book.pdf"
+    }
+    ```
+
+- **Error Response:**
+  - **Status Code:** 400 Bad Request
+  - **Body:**
+    ```json
+    {
+      "error": "Invalid data. Please provide valid information."
+    }
+    ```
+
+
+### `GET /api/books/list/`
+
+**Description:**
+
+List all books related to the user.
+
+**Request:**
+- **Method:** `GET`
+- **Endpoint:** `/api/books/list/`
+- **Header:** `Authorization: Bearer <access_token>`
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 200 OK
+  - **Body:**
+    ```json
+    [
+      {
+        "id": 1,
+        "title": "Sample Book 1",
+        "authors": "Author 1",
+        "genre": "Fiction",
+        "publication_date": "2023-01-01",
+        "description": "Sample description 1",
+        "document": "http://example.com/books/documents/sample_book_1.pdf"
+      },
+      {
+        "id": 2,
+        "title": "Sample Book 2",
+        "authors": "Author 2",
+        "genre": "Non-fiction",
+        "publication_date": "2022-05-05",
+        "description": "Sample description 2",
+        "document": "http://example.com/books/documents/sample_book_2.pdf"
+      }
+    ]
+    ```
+
+- **Error Response:**
+  - **Status Code:** 401 Unauthorized
+  - **Body:**
+    ```json
+    {
+      "error": "Unauthorized access. Please provide valid credentials."
+    }
+    ```
+
+
+### `GET /api/books/list-all/`
+
+**Description:**
+
+List all books.
+
+**Request:**
+- **Method:** `GET`
+- **Endpoint:** `/api/books/list-all/`
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 200 OK
+  - **Body:**
+    ```json
+    [
+      {
+        "id": 1,
+        "title": "Sample Book 1",
+        "authors": "Author 1",
+        "genre": "Fiction",
+        "publication_date": "2023-01-01",
+        "description": "Sample description 1",
+        "document": "http://example.com/books/documents/sample_book_1.pdf"
+      },
+      {
+        "id": 2,
+        "title": "Sample Book 2",
+        "authors": "Author 2",
+        "genre": "Non-fiction",
+        "publication_date": "2022-05-05",
+        "description": "Sample description 2",
+        "document": "http://example.com/books/documents/sample_book_2.pdf"
+      }
+    ]
+    ```
+
+- **Error Response:**
+  - **Status Code:** 404 Not Found
+  - **Body:**
+    ```json
+    {
+      "error": "No books found."
+    }
+    ```
+
+### `PUT /api/books/update/<int:pk>/`
+
+**Description:**
+
+Update a specific book.
+
+**Request:**
+- **Method:** `PUT`
+- **Endpoint:** `/api/books/update/<int:pk>/`
+- **Header:** `Authorization: Bearer <access_token>`
+- **Body:**
+  - `title` (string, optional): Updated title of the book.
+  - `authors` (string, optional): Updated authors of the book.
+  - `genre` (string, optional): Updated genre of the book.
+  - `publication_date` (date, optional): Updated publication date of the book.
+  - `description` (string, optional): Updated description of the book.
+  - `document` (file, optional): Updated document file of the book.
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 200 OK
+  - **Body:**
+    ```json
+    {
+      "id": 1,
+      "title": "Updated Book Title",
+      "authors": "Updated Author",
+      "genre": "Updated Genre",
+      "publication_date": "2024-01-01",
+      "description": "Updated description",
+      "document": "http://example.com/books/documents/updated_book.pdf"
+    }
+    ```
+
+- **Error Response:**
+  - **Status Code:** 400 Bad Request
+  - **Body:**
+    ```json
+    {
+      "error": "Invalid data. Please provide valid information."
+    }
+    ```
+
+### `DELETE /api/books/delete/<int:pk>/`
+
+**Description:**
+
+Delete a specific book.
+
+**Request:**
+- **Method:** `DELETE`
+- **Endpoint:** `/api/books/delete/<int:pk>/`
+- **Header:** `Authorization: Bearer <access_token>`
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 204 No Content
+
+- **Error Response:**
+  - **Status Code:** 404 Not Found
+  - **Body:**
+    ```json
+    {
+      "error": "Book not found."
+    }
+    ```
+
+### `POST /api/reading-list/create/`
+
+**Description:**
+
+Create a new reading list.
+
+**Request:**
+- **Method:** `POST`
+- **Endpoint:** `/api/reading-list/create/`
+- **Header:** `Authorization: Bearer <access_token>`
+- **Body:**
+  - `name` (string, required): Name of the reading list.
+  - `books`(lists, required): Id of the books.
+  - `order`(lists, optional): Integer numbers for ordering.
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 201 Created
+  - **Body:**
+    ```json
+    {
+      "id": 1,
+      "name": "Sample Reading List"
+      "books":[ 1,2,3]
+    }
+    ```
+
+- **Error Response:**
+  - **Status Code:** 400 Bad Request
+  - **Body:**
+    ```json
+    {
+      "error": "Invalid data. Please provide valid information."
+    }
+    ```
+
+### `PUT /api/reading-list/update/<int:pk>/`
+
+**Description:**
+
+Update a specific reading list.
+
+**Request:**
+- **Method:** `PUT`
+- **Endpoint:** `/api/reading-list/update/<int:pk>/`
+- **Header:** `Authorization: Bearer <access_token>`
+- **Body:**
+  - `name` (string, opitional): Updated name of the reading list.
+  - `books`(list, optional): Updated books of the reading list.
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 200 OK
+  - **Body:**
+    ```json
+    {
+      "id": 1,
+      "name": "Updated Reading List Name"
+    }
+    ```
+
+- **Error Response:**
+  - **Status Code:** 400 Bad Request
+  - **Body:**
+    ```json
+    {
+      "error": "Invalid data. Please provide valid information."
+    }
+    ```
+
+### `GET /api/reading-list/all/`
+
+**Description:**
+
+List all reading lists related to the user.
+
+**Request:**
+- **Method:** `GET`
+- **Endpoint:** `/api/reading-list/all/`
+- **Header:** `Authorization: Bearer <access_token>`
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 200 OK
+  - **Body:**
+    ```json
+    [
+      {
+        "id": 1,
+        "name": "Sample Reading List"
+      },
+      {
+        "id": 2,
+        "name": "Another Reading List"
+      }
+    ]
+    ```
+
+- **Error Response:**
+  - **Status Code:** 404 Not Found
+  - **Body:**
+    ```json
+    {
+      "error": "No reading lists found."
+    }
+    ```
+
+### `DELETE /api/reading-list/delete/<int:pk>/`
+
+**Description:**
+
+Delete a specific reading list related to the user.
+
+**Request:**
+- **Method:** `DELETE`
+- **Endpoint:** `/api/reading-list/delete/<int:pk>/`
+- **Header:** `Authorization: Bearer <access_token>`
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 204 No Content
+
+- **Error Response:**
+  - **Status Code:** 404 Not Found
+  - **Body:**
+    ```json
+    {
+      "error": "Reading list not found."
+    }
+    ```
+
+### `POST /api/reading-list/add-item/<int:reading_list_id>/`
+
+**Description:**
+
+Add a book to a reading list.
+
+**Request:**
+- **Method:** `POST`
+- **Endpoint:** `/api/reading-list/add-item/<int:reading_list_id>/`
+- **Header:** `Authorization: Bearer <access_token>`
+- **Body:**
+  - `book_id` (integer, required): ID of the book to add to the reading list.
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 200 OK
+  - **Body:**
+    ```json
+    {
+      "message": "Book added to reading list successfully."
+    }
+    ```
+
+- **Error Response:**
+  - **Status Code:** 400 Bad Request
+  - **Body:**
+    ```json
+    {
+      "error": "Invalid data. Please provide valid information."
+    }
+    ```
+
+### `DELETE /api/reading-list/<int:reading_list_id>/books/<int:book_id>/delete/`
+
+**Description:**
+
+Remove a book from a reading list.
+
+**Request:**
+- **Method:** `DELETE`
+- **Endpoint:** `/api/reading-list/<int:reading_list_id>/books/<int:book_id>/delete/`
+- **Header:** `Authorization: Bearer <access_token>`
+
+**Response:**
+- **Success Response:**
+  - **Status Code:** 204 No Content
+
+- **Error Response:**
+  - **Status Code:** 404 Not Found
+  - **Body:**
+    ```json
+    {
+      "error": "Book not found in reading list."
+    }
+    ```
+
