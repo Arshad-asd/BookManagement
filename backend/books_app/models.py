@@ -4,7 +4,8 @@ from django.conf import settings
 
 
 class Book(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='books')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE, related_name='books')
     title = models.CharField(max_length=255)
     authors = models.CharField(max_length=255)
     genre = models.CharField(max_length=100)
@@ -31,8 +32,8 @@ class ReadingList(models.Model):
 class ReadingListItem(models.Model):
     book = models.ForeignKey('Book', on_delete=models.CASCADE)
     reading_list = models.ForeignKey(ReadingList, on_delete=models.CASCADE)
-    order = models.PositiveIntegerField(null=True) 
-    
+    order = models.PositiveIntegerField(null=True)
+
     class Meta:
         unique_together = ('book', 'reading_list')
 

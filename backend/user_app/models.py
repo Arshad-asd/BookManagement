@@ -46,8 +46,10 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
+
 class UserProfile(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(
+        CustomUser, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
     location = models.CharField(max_length=100, blank=True)

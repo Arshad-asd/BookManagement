@@ -7,15 +7,18 @@ from .models import Book
 from .serializers import *
 from rest_framework import generics
 
+
 class BookCreateAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        serializer = BookSerializer(data=request.data, context={'request': request})  # Pass the request context
+        serializer = BookSerializer(data=request.data, context={
+                                    'request': request})  # Pass the request context
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class BookUpdateAPIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -61,11 +64,13 @@ class UserBooksListAPIView(APIView):
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 class AllBooksListAPIView(APIView):
     def get(self, request):
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class ReadingListCreateAPIView(generics.CreateAPIView):
     queryset = ReadingList.objects.all()
@@ -94,17 +99,17 @@ class UserReadingListDeleteView(generics.DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, *args, **kwargs):
-            try:
-                reading_list = self.get_object()
-                if reading_list.user == request.user:
-                    list_name = reading_list.name
-                    list_id = reading_list.id
-                    reading_list.delete()
-                    return Response({"message": f"Reading list '{list_name}' with ID {list_id} has been deleted."}, status=status.HTTP_204_NO_CONTENT)
-                else:
-                    return Response({"detail": "You don't have permission to delete this reading list."}, status=status.HTTP_403_FORBIDDEN)
-            except:
-                return Response({"detail": "Reading list not found."}, status=status.HTTP_404_NOT_FOUND)
+        try:
+            reading_list = self.get_object()
+            if reading_list.user == request.user:
+                list_name = reading_list.name
+                list_id = reading_list.id
+                reading_list.delete()
+                return Response({"message": f"Reading list '{list_name}' with ID {list_id} has been deleted."}, status=status.HTTP_204_NO_CONTENT)
+            else:
+                return Response({"detail": "You don't have permission to delete this reading list."}, status=status.HTTP_403_FORBIDDEN)
+        except:
+            return Response({"detail": "Reading list not found."}, status=status.HTTP_404_NOT_FOUND)
 
 
 class AddBookToReadingListView(APIView):
@@ -142,7 +147,8 @@ class DeleteBookFromReadingListView(APIView):
             return Response({"message": "Book not found in the reading list"}, status=status.HTTP_404_NOT_FOUND)
 
         # Delete the book from the reading list
-        reading_list_item = ReadingListItem.objects.get(book=book, reading_list=reading_list)
+        reading_list_item = ReadingListItem.objects.get(
+            book=book, reading_list=reading_list)
         reading_list_item.delete()
 
         return Response({"message": "Book deleted from reading list successfully"}, status=status.HTTP_204_NO_CONTENT)
